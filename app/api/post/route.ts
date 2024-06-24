@@ -6,11 +6,11 @@ export const GET = async () => {
   try {
     await dbConfig();
 
-    // const post = await postData.find();
+    const post = await postData.find();
     return NextResponse.json({
       status: 200,
       message: "get all Post",
-      //   data: post,
+      data: post,
     });
   } catch (error) {
     return NextResponse.json({

@@ -1,9 +1,24 @@
+import { API_LOCAL } from "@/utils/constant";
 import Link from "next/link";
 import React from "react";
 import { FaGithub } from "react-icons/fa";
 import { FaGoogle } from "react-icons/fa6";
 
-const page = () => {
+const page = async () => {
+  const createAccount = async (data: FormData) => {
+    "use server";
+    const name = data.get("name") as string;
+    const email = data.get("email") as string;
+    const password = data.get("password") as string;
+
+    await fetch(`${API_LOCAL}/api/register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name, email, password }),
+    });
+  };
   return (
     <div className="flex w-full h-screen justify-center items-center">
       <div className="border rounded-md w-[500px] min-h-[300px] p-4 ">
@@ -13,7 +28,7 @@ const page = () => {
           <hr />
         </div>
 
-        <form>
+        <form action={createAccount}>
           <div className="flex flex-col mb-4">
             <label className="font-semibold text-[12px]">Display Name</label>
             <input
@@ -42,7 +57,10 @@ const page = () => {
             />
           </div>
 
-          <button className="w-full mt-8 h-[55px] flex items-center justify-center text-white bg-neutral-800 rounded-md">
+          <button
+            type="submit"
+            className="w-full mt-8 h-[55px] flex items-center justify-center text-white bg-neutral-800 rounded-md"
+          >
             Register
           </button>
         </form>

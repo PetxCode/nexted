@@ -1,9 +1,18 @@
+"use client";
+
+import { signIn } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
 import { FaGithub } from "react-icons/fa";
 import { FaGoogle } from "react-icons/fa6";
 
 const page = () => {
+  const signInUser = (data: FormData) => {
+    const email = data.get("email");
+    const password = data.get("password");
+
+    signIn("credentials", { email, password });
+  };
   return (
     <div className="flex w-full h-screen justify-center items-center">
       <div className="border rounded-md w-[500px] min-h-[300px] p-4 ">
@@ -13,7 +22,7 @@ const page = () => {
           <hr />
         </div>
 
-        <form>
+        <form action={signInUser}>
           <div className="flex flex-col mb-4">
             <label className="font-semibold text-[12px]">Email</label>
             <input
@@ -33,7 +42,10 @@ const page = () => {
             />
           </div>
 
-          <button className="w-full mt-8 h-[55px] flex items-center justify-center text-white bg-neutral-800 rounded-md">
+          <button
+            type="submit"
+            className="w-full mt-8 h-[55px] flex items-center justify-center text-white bg-neutral-800 rounded-md"
+          >
             Sign in
           </button>
         </form>

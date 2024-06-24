@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import MainLayout from "./MainLayout";
 import { dbConfig } from "@/utils/dbConfig";
+import MainSession from "./components/MainSession";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,7 +21,9 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <MainLayout children={children} />
+        <MainSession>
+          <MainLayout children={children} />
+        </MainSession>
       </body>
     </html>
   );

@@ -1,21 +1,31 @@
 import React from "react";
-import FormComp from "./static/FormComp";
-import DisplayScreen from "./static/DisplayScreen";
 
-const page = () => {
-  return (
-    <div className="border m-6 p-4 rounded-md ">
-      <div>This is the Home Screen</div>
+import { getServerSession } from "next-auth";
+import { options } from "./api/auth/[...nextauth]/options";
+import ViewScreen from "./api/(screens)/users/ViewScreen";
+import { redirect } from "next/navigation";
+import ViewUserScreen from "./api/(screens)/admin/ViewUser";
 
-      <FormComp />
+const page = async () => {
+  const session: any = await getServerSession(options);
 
-      <div className="my-10">
-        <hr />
+  console.log(session);
+
+  if (session?.user?.role === "admin") {
+    return (
+      <div className="border m-6 p-4 rounded-md ">
+        <ViewScreen />
       </div>
-
-      <DisplayScreen />
-    </div>
-  );
+    );
+  } else if (session?.user?.role === "user") {
+    return (
+      <div className="border m-6 p-4 rounded-md ">
+        <ViewUserScreen />
+      </div>
+    );
+  } else {
+    return redirect("/signin");
+  }
 };
 
 export default page;

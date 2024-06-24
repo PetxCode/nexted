@@ -1,3 +1,6 @@
+"use client";
+
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import React, { ReactNode } from "react";
 import { MdCreate, MdHome, MdLock, MdPerson } from "react-icons/md";
@@ -37,7 +40,12 @@ const Header = () => {
     },
   ];
 
-  const user = null;
+  const session = useSession();
+
+  console.log("reading session: ", session);
+
+  let user: undefined | null | {} = session.data?.user;
+
   return (
     <div className="flex justify-center items-center w-full h-[70px] border-b">
       <div className="w-[90%] flex justify-between items-center">
@@ -55,7 +63,12 @@ const Header = () => {
           ))}
         </div>
         {user ? (
-          <div className="border rounded-sm flex px-6 py-2 items-center">
+          <div
+            className="border rounded-sm flex px-6 py-2 items-center cursor-pointer"
+            onClick={() => {
+              signOut();
+            }}
+          >
             Log out
           </div>
         ) : (
