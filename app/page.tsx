@@ -19,7 +19,7 @@ const page = async () => {
     );
   } else if (session?.user?.role === "user") {
     return (
-      <div className="border m-6 p-4 rounded-md ">
+      <div className={`bg-blue-50 border m-6 p-4 rounded-md `}>
         <ViewUserScreen />
       </div>
     );

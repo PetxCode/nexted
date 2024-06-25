@@ -7,7 +7,7 @@ import { options } from "../../auth/[...nextauth]/options";
 const ViewUserScreen = async () => {
   const session: any = await getServerSession(options);
   return (
-    <div className="bg-purple-100">
+    <div>
       <div>
         This is the {session?.user.name} Screen, You are a Client:{" "}
         {session?.user.role}
